@@ -5,6 +5,8 @@
  */
 package interfaz;
 
+import clases.Fraccionario;
+
 /**
  *
  * @author lyanet1
@@ -41,7 +43,7 @@ public class Principal extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         txtDenominador3 = new javax.swing.JTextField();
         cmdCalcular = new javax.swing.JButton();
-        cmdBorrar = new javax.swing.JButton();
+        cmdLimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,23 +66,35 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("=");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 60, 40));
+
+        txtNumerador3.setEditable(false);
         jPanel1.add(txtNumerador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, 60, 30));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 60, 10));
+
+        txtDenominador3.setEditable(false);
         jPanel1.add(txtDenominador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 60, 30));
 
         cmdCalcular.setText("Calcular");
-        jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
+        cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCalcularActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 183, 90, 30));
 
-        cmdBorrar.setText("Borrar");
-        jPanel1.add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, -1, -1));
+        cmdLimpiar.setText("Limpiar");
+        cmdLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLimpiarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmdLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 183, 90, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 31, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,9 +103,55 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(386, 268));
+        setSize(new java.awt.Dimension(492, 268));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+        int op, n1, n2, d1, d2;
+        Fraccionario f1, f2, f3=null;
+        op = cmbOperacion.getSelectedIndex();
+        n1 = Integer.parseInt(txtNumerador1.getText());
+        d1 = Integer.parseInt(txtDenominador1.getText());
+        n2 = Integer.parseInt(txtNumerador2.getText());
+        d2 = Integer.parseInt(txtDenominador2.getText());
+
+        f1 = new Fraccionario(n1, d1);
+        f2 = new Fraccionario(n2, d2);
+
+        switch (op) {
+            case 0:
+                f3 = f1.sumar(f2);
+
+                break;
+            case 1:
+                f3 = f1.restar(f2);
+
+                break;
+                case 2:
+                    f3 = f1.multiplicar(f2);
+                
+                break;
+                case 3:
+                    f3 = f1.dividir(f2);
+                    break;
+
+        }
+        txtNumerador3.setText("" + f3.getNumerador());
+        txtDenominador3.setText("" + f3.getDenominador());
+
+    }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void cmdLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLimpiarActionPerformed
+       txtNumerador1.setText("");
+       txtDenominador1.setText("");
+       txtNumerador2.setText("");
+       txtDenominador2.setText("");
+       txtNumerador3.setText("");
+       txtDenominador3.setText("");
+       cmbOperacion.setSelectedIndex(0);
+       txtNumerador1.requestFocusInWindow();
+    }//GEN-LAST:event_cmdLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,8 +190,8 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbOperacion;
-    private javax.swing.JButton cmdBorrar;
     private javax.swing.JButton cmdCalcular;
+    private javax.swing.JButton cmdLimpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
